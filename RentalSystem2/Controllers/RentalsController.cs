@@ -57,7 +57,11 @@ namespace RentalSystem2.Controllers
             if (ModelState.IsValid)
             {
                 var equipment = _context.Equipment.Find(rental.EquipmentId);
-                if (equipment != null && rental.ReturnDate.HasValue)
+                if (equipment.Quantity <= 0)
+                {
+                    ModelState.AddModelError("", "Niewystarczająca liczba sprzętu.");
+                }
+                else if (rental.ReturnDate.HasValue)
                 {
                     int daysRented = (rental.ReturnDate.Value - rental.RentalDate).Days;
                     rental.FinalCost = daysRented * equipment.DailyRentalRate;
@@ -68,9 +72,12 @@ namespace RentalSystem2.Controllers
                     rental.FinalCost = 0;
                 }
 
-                _context.Add(rental);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(rental);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id");
