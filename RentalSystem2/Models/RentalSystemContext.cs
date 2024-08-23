@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using RentalSystem2.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace RentalSystem2.Models;
 
@@ -154,5 +151,5 @@ public partial class RentalSystemContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-public DbSet<RentalSystem2.Models.Rental> Rental { get; set; } = default!;
+    public DbSet<RentalSystem2.Models.Rental> Rental { get; set; } = default!;
 }

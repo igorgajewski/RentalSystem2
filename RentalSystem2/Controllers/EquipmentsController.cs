@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentalSystem2.Models;
 
@@ -86,7 +80,7 @@ namespace RentalSystem2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ActivityType,Manufacturer,DailyRentalRate,SkillLevel,AmateurDiscount,Description,Season,Qualifications")] Equipment equipment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ActivityType,Manufacturer,DailyRentalRate,SkillLevel,AmateurDiscount,Description,Season,Qualifications,Quantity")] Equipment equipment)
         {
             if (id != equipment.Id)
             {

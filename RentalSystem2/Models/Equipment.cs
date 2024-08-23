@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RentalSystem2.Models;
 
@@ -11,7 +8,7 @@ public partial class Equipment
 
     public string Name { get; set; } = null!;
 
-    [Display(Name="Activity Type")]
+    [Display(Name = "Activity Type")]
     public ActivityType ActivityType { get; set; }
 
     public string Manufacturer { get; set; } = null!;

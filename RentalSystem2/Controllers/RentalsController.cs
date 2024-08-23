@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentalSystem2.Models;
@@ -48,7 +44,7 @@ namespace RentalSystem2.Controllers
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id");
             ViewData["EquipmentId"] = new SelectList(_context.Equipment, "Id", "Id");
-            return View();
+            return View(new Rental());
         }
 
         // POST: Rentals/Create
@@ -56,7 +52,7 @@ namespace RentalSystem2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClientId,EmployeeId,EquipmentId,FinalCost,RentalDate,ReturnDate")] Rental rental)
+        public async Task<IActionResult> Create([Bind("Id,ClientId,EmployeeId,EquipmentId,RentalDate,ReturnDate")] Rental rental)
         {
             if (ModelState.IsValid)
             {
@@ -65,11 +61,13 @@ namespace RentalSystem2.Controllers
                 {
                     int daysRented = (rental.ReturnDate.Value - rental.RentalDate).Days;
                     rental.FinalCost = daysRented * equipment.DailyRentalRate;
+                    equipment.Quantity -= 1;
                 }
                 else
                 {
                     rental.FinalCost = 0;
                 }
+
                 _context.Add(rental);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -159,6 +157,8 @@ namespace RentalSystem2.Controllers
             if (rental != null)
             {
                 _context.Rental.Remove(rental);
+                var equipment = _context.Equipment.Find(rental.EquipmentId);
+                equipment.Quantity += 1;
             }
 
             await _context.SaveChangesAsync();

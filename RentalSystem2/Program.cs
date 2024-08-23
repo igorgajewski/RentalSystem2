@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using RentalSystem2.Models;
-using System.Globalization;
 
 namespace RentalSystem2
 {
