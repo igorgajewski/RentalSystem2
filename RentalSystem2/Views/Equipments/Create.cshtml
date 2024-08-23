@@ -1,0 +1,73 @@
+﻿@model RentalSystem2.Models.Equipment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Equipment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityType" class="control-label"></label>
+                <select asp-for="ActivityType" class="form-control" asp-items="Html.GetEnumSelectList<RentalSystem2.Models.ActivityType>()"></select>
+                <span asp-validation-for="ActivityType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control" />
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DailyRentalRate" class="control-label"></label>
+                <input asp-for="DailyRentalRate" class="form-control" />
+                <span asp-validation-for="DailyRentalRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SkillLevel" class="control-label"></label>
+                <select asp-for="SkillLevel" class="form-control" asp-items="Html.GetEnumSelectList<RentalSystem2.Models.SkillLevel>()"></select>
+                <span asp-validation-for="SkillLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmateurDiscount" class="control-label"></label>
+                <input asp-for="AmateurDiscount" class="form-control" />
+                <span asp-validation-for="AmateurDiscount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Season" class="control-label"></label>
+                <select asp-for="Season" class="form-control" asp-items="Html.GetEnumSelectList<RentalSystem2.Models.Season>()"></select>
+                <span asp-validation-for="Season" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Qualifications" class="control-label"></label>
+                <select asp-for="Qualifications" class="form-control" asp-items="Html.GetEnumSelectList<RentalSystem2.Models.Qualifications>()"></select>
+                <span asp-validation-for="Qualifications" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
