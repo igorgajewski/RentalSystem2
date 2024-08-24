@@ -19,6 +19,7 @@ public partial class RentalSystemContext : DbContext
     public virtual DbSet<Employee> Employees { get; set; }
 
     public virtual DbSet<Equipment> Equipment { get; set; }
+    public DbSet<Rental> Rental { get; set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseMySQL("Name=ConnectionStrings:DefaultConnection");
@@ -61,15 +62,9 @@ public partial class RentalSystemContext : DbContext
             entity.Property(e => e.EmplymentDate)
                 .HasColumnType("date")
                 .HasColumnName("emplyment_date");
-            //entity.Property(e => e.FirstName)
-            //    .HasMaxLength(255)
-            //    .HasColumnName("first_name");
             entity.Property(e => e.HomeAddress)
                 .HasMaxLength(255)
                 .HasColumnName("home_address");
-            //entity.Property(e => e.LastName)
-            //    .HasMaxLength(255)
-            //    .HasColumnName("last_name");
             entity.Property(e => e.Name)
             .HasMaxLength(255)
             .HasColumnName("name");
@@ -151,5 +146,4 @@ public partial class RentalSystemContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-    public DbSet<Rental> Rental { get; set; } = default!;
 }

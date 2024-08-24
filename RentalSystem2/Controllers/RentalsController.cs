@@ -98,6 +98,7 @@ namespace RentalSystem2.Controllers
             {
                 return NotFound();
             }
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
             return View(rental);
         }
 
