@@ -65,7 +65,6 @@ namespace RentalSystem2.Controllers
                 {
                     int daysRented = (rental.ReturnDate.Value - rental.RentalDate).Days;
                     rental.FinalCost = daysRented * equipment.DailyRentalRate;
-                    equipment.Quantity -= 1;
                 }
                 else
                 {
@@ -74,6 +73,7 @@ namespace RentalSystem2.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    equipment.Quantity -= 1;
                     _context.Add(rental);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -133,7 +133,7 @@ namespace RentalSystem2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientID"] = new SelectList(_context.Clients, "Id", "Id", rental.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "ClientId", "ClientId", rental.ClientId);
             return View(rental);
         }
 

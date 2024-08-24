@@ -6,7 +6,7 @@ public partial class Rental
 {
     public int Id { get; set; }
 
-    [Display(Name = "Client ID")]
+    [Display(Name = "Client id")]
     public int ClientId { get; set; }
 
     [Display(Name = "Employee ID")]
@@ -17,8 +17,6 @@ public partial class Rental
 
     [Display(Name = "Final cost")]
     public int FinalCost { get; set; }
-
-    public Client? Client { get; set; }
 
     [Display(Name = "Rental date")]
     public DateTime RentalDate { get; set; }

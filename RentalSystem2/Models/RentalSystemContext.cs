@@ -35,12 +35,9 @@ public partial class RentalSystemContext : DbContext
             entity.HasIndex(e => e.Nip, "nip").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.FirstName)
+            entity.Property(e => e.Name)
                 .HasMaxLength(255)
-                .HasColumnName("first_name");
-            entity.Property(e => e.LastName)
-                .HasMaxLength(255)
-                .HasColumnName("last_name");
+                .HasColumnName("name");
             entity.Property(e => e.Nip)
                 .HasMaxLength(10)
                 .HasColumnName("nip");
@@ -64,15 +61,18 @@ public partial class RentalSystemContext : DbContext
             entity.Property(e => e.EmplymentDate)
                 .HasColumnType("date")
                 .HasColumnName("emplyment_date");
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(255)
-                .HasColumnName("first_name");
+            //entity.Property(e => e.FirstName)
+            //    .HasMaxLength(255)
+            //    .HasColumnName("first_name");
             entity.Property(e => e.HomeAddress)
                 .HasMaxLength(255)
                 .HasColumnName("home_address");
-            entity.Property(e => e.LastName)
-                .HasMaxLength(255)
-                .HasColumnName("last_name");
+            //entity.Property(e => e.LastName)
+            //    .HasMaxLength(255)
+            //    .HasColumnName("last_name");
+            entity.Property(e => e.Name)
+            .HasMaxLength(255)
+            .HasColumnName("name");
             entity.Property(e => e.Phone)
                 .HasMaxLength(20)
                 .HasColumnName("phone");
@@ -151,5 +151,5 @@ public partial class RentalSystemContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-    public DbSet<RentalSystem2.Models.Rental> Rental { get; set; } = default!;
+    public DbSet<Rental> Rental { get; set; } = default!;
 }

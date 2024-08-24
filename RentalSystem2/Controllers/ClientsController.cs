@@ -48,13 +48,20 @@ namespace RentalSystem2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Phone,Nip")] Client client)
+        public async Task<IActionResult> Create([Bind("Id,Name,Phone,Nip")] Client client)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(client);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (_context.Clients.Any(c => c.Nip == client.Nip))
+                {
+                    ModelState.AddModelError("Nip", "Klient o podanym numerze NIP już istnieje.");
+                }
+                else
+                {
+                    _context.Add(client);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(client);
         }
@@ -80,7 +87,7 @@ namespace RentalSystem2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Phone,Nip")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Phone,Nip")] Client client)
         {
             if (id != client.Id)
             {
@@ -89,23 +96,30 @@ namespace RentalSystem2.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                if (_context.Clients.Any(c => c.Nip == client.Nip))
                 {
-                    _context.Update(client);
-                    await _context.SaveChangesAsync();
+                    ModelState.AddModelError("Nip", "Klient o podanym numerze NIP już istnieje.");
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!ClientExists(client.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(client);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!ClientExists(client.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(client);
         }
